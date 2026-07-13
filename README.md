@@ -1,183 +1,180 @@
-# 📘 EduExplain – AI-Powered Document Assistant
+# 📄 DocuMentor AI
 
-EduExplain is a Hybrid Retrieval-Augmented Generation (RAG) application that allows users to either upload a PDF and ask questions about its contents or ask general questions without uploading any document.
-
-The application combines semantic search using Qdrant with Google's Gemini LLM to provide accurate, context-aware responses.
+**DocuMentor AI** is an AI-powered application that combines **Retrieval-Augmented Generation (RAG)** with **Google Gemini** to provide intelligent document question answering, resume analysis, and ATS-style resume matching through an easy-to-use Streamlit interface.
 
 ---
 
 ## 🚀 Features
 
-* 📄 Upload PDF (Optional)
-* 🤖 General AI Assistant using Gemini
-* 🔍 Semantic Search with Qdrant
-* 🧠 Sentence Transformer Embeddings
-* 💬 Chat-style Streamlit Interface
-* ⚡ Automatic PDF Indexing
-* 📑 Context-based Question Answering
-* 🔄 Falls back to Gemini when no relevant document context is found
+### 🤖 AI Assistant
+
+* Ask general questions on any topic.
+* Powered by Google Gemini.
+* Provides clear and conversational responses.
+
+### 📘 Chat with Documents (RAG)
+
+* Upload PDF documents.
+* Extracts text from PDFs.
+* Splits documents into semantic chunks.
+* Generates embeddings using Sentence Transformers.
+* Performs semantic search using FAISS.
+* Answers questions using document context.
+* Falls back to Gemini's general knowledge if the answer is not found in the document.
+
+### 📄 Resume Analyzer
+
+Upload a resume and receive:
+
+* Professional Summary
+* Technical Skills
+* Experience Summary
+* Project Highlights
+* Strengths
+* Areas for Improvement
+* Suggested Job Roles
+* Interview Questions
+
+### 🎯 ATS Resume Match
+
+Compare a resume against a Job Description to generate:
+
+* Estimated ATS Match Score
+* Matching Skills
+* Missing Skills
+* Resume Strengths
+* Improvement Suggestions
+* Hiring Recommendation
 
 ---
 
-## 🏗️ Architecture
+# 🛠 Tech Stack
 
-```
-User
-   │
-   ▼
-Streamlit UI
-   │
-   ├──────────────► General Question
-   │                     │
-   │                     ▼
-   │                 Gemini API
-   │
-   ▼
-Upload PDF
-   │
-   ▼
-PDF Loader
-   │
-   ▼
-Chunking
-   │
-   ▼
-Sentence Transformer
-   │
-   ▼
-Qdrant Vector Database
-   │
-   ▼
-Semantic Retrieval
-   │
-   ▼
-Gemini API
-   │
-   ▼
-Response
-```
+| Category              | Technologies                             |
+| --------------------- | ---------------------------------------- |
+| Programming Language  | Python                                   |
+| Frontend              | Streamlit                                |
+| LLM                   | Google Gemini API                        |
+| RAG                   | FAISS                                    |
+| Embeddings            | Sentence Transformers (all-MiniLM-L6-v2) |
+| PDF Processing        | PyPDF                                    |
+| Environment Variables | python-dotenv                            |
+| Numerical Computing   | NumPy                                    |
 
 ---
 
-## 🛠 Tech Stack
+# 📂 Project Structure
 
-* Python
-* Streamlit
-* Google Gemini API
-* Qdrant Vector Database
-* Sentence Transformers
-* PyPDF
-* Hugging Face Embeddings
-
----
-
-## 📂 Project Structure
-
-```
-EduExplain_RAG/
+```text
+DocuMentor_AI/
 │
 ├── src/
 │   ├── app.py
-│   ├── pdf_loader.py
-│   ├── chunker.py
-│   ├── embeddings.py
-│   ├── retriever.py
-│   ├── qdrant_manager.py
 │   ├── pipeline.py
-│   ├── indexer.py
 │   ├── llm.py
-│   └── model_loader.py
+│   ├── embeddings.py
+│   ├── chunker.py
+│   ├── pdf_loader.py
+│   ├── retriever.py
+│   ├── indexer.py
+│   ├── faiss_manager.py
+│   ├── resume_loader.py
+│   ├── resume_analyzer.py
+│   └── ats_matcher.py
 │
 ├── data/
+│
 ├── requirements.txt
-├── .env.example
+├── README.md
 ├── .gitignore
-└── README.md
-```
+└── .env.example
 
----
-
-## ⚙️ Installation
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-cd EduExplain_RAG
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate it:
-
-Windows
-
-```bash
-venv\Scripts\activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-Create a `.env` file:
-
-```text
-GEMINI_API_KEY=your_api_key_here
-```
-
-Run the application:
+# ▶️ Run the Application
 
 ```bash
 streamlit run src/app.py
 ```
 
----
-
-## 💡 How It Works
-
-1. Upload a PDF (optional).
-2. The PDF is split into text chunks.
-3. Embeddings are generated using Sentence Transformers.
-4. Chunks are stored in Qdrant.
-5. User asks a question.
-6. Relevant chunks are retrieved.
-7. Gemini generates a grounded answer using the retrieved context.
-8. If no relevant context exists, Gemini provides a general answer.
+The application will open automatically in your browser.
 
 ---
 
-## 📈 Future Improvements
+# 💡 How It Works
 
-* Support multiple PDFs
-* Conversation memory
-* Source relevance scores
-* OCR for scanned PDFs
-* Authentication
-* Docker deployment
-* Cloud-hosted Qdrant
+## Document Chat
 
----
-
-## 📸 Screenshots
-
-Add screenshots of:
-
-* Home Page
-* PDF Upload
-* Chat Interface
-* Retrieved Context
+1. Upload a PDF document.
+2. Extract text from the PDF.
+3. Split the text into smaller chunks.
+4. Generate vector embeddings using Sentence Transformers.
+5. Store embeddings in FAISS.
+6. Retrieve the most relevant chunks based on the user's question.
+7. Send the retrieved context and question to Google Gemini.
+8. Display the generated response.
 
 ---
 
-## 👩‍💻 Author
+## Resume Analyzer
+
+1. Upload a resume.
+2. Extract text.
+3. Send the resume content to Gemini using a structured prompt.
+4. Generate:
+
+   * Summary
+   * Skills
+   * Experience
+   * Strengths
+   * Improvements
+   * Suggested Roles
+   * Interview Questions
+
+---
+
+## ATS Resume Match
+
+1. Upload a resume.
+2. Paste a Job Description.
+3. Gemini compares both documents.
+4. Generate:
+
+   * ATS Match Score
+   * Matching Skills
+   * Missing Skills
+   * Resume Feedback
+   * Hiring Recommendation
+
+---
+
+
+# 🔮 Future Enhancements
+
+* Multi-document support
+* Conversation history
+* Export resume analysis as PDF
+* Resume vs Multiple Job Descriptions
+* Cloud deployment
+* User authentication
+
+---
+
+# 📚 Skills Demonstrated
+
+* Large Language Models (LLMs)
+* Retrieval-Augmented Generation (RAG)
+* Semantic Search
+* Vector Embeddings
+* FAISS
+* Prompt Engineering
+* Streamlit Application Development
+* PDF Processing
+* Resume Analysis
+* ATS-style Resume Evaluation
+
+---
+
+# 👩‍💻 Author
 
 **Divya Paruchuru**
 
-Aspiring AI / Generative AI Engineer with experience in Machine Learning data operations, Retrieval-Augmented Generation (RAG), LLM integration, and AI application development.
+Aspiring AI/GenAI Engineer passionate about building practical AI applications using Large Language Models, Retrieval-Augmented Generation (RAG), Prompt Engineering, and Machine Learning.

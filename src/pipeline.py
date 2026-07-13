@@ -3,37 +3,26 @@ from llm import generate_response
 
 
 def ask(question):
+
     """
-    Returns:
-        answer (str)
-        sources (list)
+    Hybrid RAG pipeline:
+
+    1. Try to answer from uploaded document.
+    2. If no useful document context is found,
+       use Gemini as a general AI assistant.
     """
 
-    try:
-        results = retrieve(question)
+    # Retrieve relevant document chunks
+    results = retrieve(question)
 
-        # No PDF indexed or no matching chunks
-        if not results:
-            answer = generate_response(question)
-            return answer, []
-
-        context = "\n\n".join(
-            [point.payload["text"] for point in results]
-        )
+    # Case 1: No document context found
+    if not results:
 
         prompt = f"""
-You are EduExplain, an AI assistant.
+You are EduExplain, a helpful AI assistant.
 
-If the uploaded document contains the answer, answer using the document.
-
-If the uploaded document does not contain enough information,
-first say:
-"I couldn't find enough information in the uploaded document."
-
-Then provide a general explanation using your own knowledge.
-
-Document Context:
-{context}
+The user may ask questions unrelated to the uploaded document.
+Answer the question normally using your general knowledge.
 
 Question:
 {question}
@@ -43,10 +32,35 @@ Answer:
 
         answer = generate_response(prompt)
 
-        return answer, results
-
-    except Exception:
-
-        answer = generate_response(question)
-
         return answer, []
+
+
+    # Case 2: Document context found
+
+    context = "\n\n".join(results)
+
+
+    prompt = f"""
+You are EduExplain, an AI assistant.
+
+Use the document context when it is relevant.
+
+If the document does not contain enough information,
+answer using your general knowledge.
+
+Document Context:
+{context}
+
+
+Question:
+{question}
+
+
+Answer:
+"""
+
+
+    answer = generate_response(prompt)
+
+
+    return answer, results

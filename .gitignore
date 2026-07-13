@@ -1,24 +1,11 @@
-# Virtual Environment
 venv/
-
-# Python
+.env
 __pycache__/
 *.pyc
-
-# Environment Variables
-.env
-
-# Qdrant Database
-qdrant_db/
-
-# Uploaded PDFs
-data/documents/
-
-# VS Code
-.vscode/
-
-# Streamlit cache
 .streamlit/
-
-# macOS
+data/documents/
+faiss.index
+chunks.pkl
+.vscode/
 .DS_Store
+Thumbs.db

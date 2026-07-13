@@ -2,28 +2,38 @@ import os
 from dotenv import load_dotenv
 from google import genai
 
-# Load environment variables
 load_dotenv()
 
-# Create Gemini client
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
 
 def generate_response(prompt):
-    response = client.models.generate_content(
-        model="gemini-flash-latest",
-        contents=prompt
-    )
 
-    return response.text
+    try:
+
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+        return response.text
+
+    except Exception as e:
+
+        print(e)
+
+        return (
+            "⚠️ Gemini is currently unavailable or experiencing high demand.\n\n"
+            "Please wait a few moments and try again."
+        )
 
 
 if __name__ == "__main__":
 
-    answer = generate_response(
-        "Explain Machine Learning in simple words."
+    print(
+        generate_response(
+            "What is Machine Learning?"
+        )
     )
-
-    print(answer)

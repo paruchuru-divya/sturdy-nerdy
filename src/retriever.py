@@ -1,36 +1,18 @@
-from qdrant_client import QdrantClient
 from model_loader import get_embedding_model
+from faiss_manager import FAISSManager
 
 model = get_embedding_model()
 
-# Connect to local Qdrant
-client = QdrantClient(path="qdrant_db")
 
-COLLECTION_NAME = "edu_explain"
+def retrieve(query):
 
+    embedding = model.encode(query)
 
-def retrieve(query, top_k=3):
+    faiss_db = FAISSManager()
 
-    # Convert question to embedding
-    query_embedding = model.encode(query).tolist()
-
-    # Search Qdrant
-    results = client.query_points(
-        collection_name=COLLECTION_NAME,
-        query=query_embedding,
-        limit=top_k
+    chunks = faiss_db.search(
+        embedding,
+        top_k=3
     )
 
-    return results.points
-
-
-if __name__ == "__main__":
-
-    question = "What is machine learning?"
-
-    results = retrieve(question)
-
-    print("\nRetrieved Chunks:\n")
-
-    for i, point in enumerate(results, start=1):
-        print(f"{i}. {point.payload['text']}")
+    return chunks
