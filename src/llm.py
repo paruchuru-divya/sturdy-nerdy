@@ -1,39 +1,46 @@
 import os
 from dotenv import load_dotenv
-from google import genai
+from openai import OpenAI
 
+# Load environment variables
 load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
+# Initialize Groq client
+client = OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1"
 )
+
+MODEL_NAME = "llama-3.3-70b-versatile"
 
 
 def generate_response(prompt):
-
     try:
-
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
+        response = client.chat.completions.create(
+            model=MODEL_NAME,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are DocuMentor AI, a helpful AI assistant. "
+                        "Answer clearly, accurately, and professionally."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            temperature=0.3,
+            max_tokens=1024
         )
 
-        return response.text
+        return response.choices[0].message.content
 
     except Exception as e:
-
-        print(e)
-
-        return (
-            "⚠️ Gemini is currently unavailable or experiencing high demand.\n\n"
-            "Please wait a few moments and try again."
-        )
+        return f"Error: {str(e)}"
 
 
 if __name__ == "__main__":
-
-    print(
-        generate_response(
-            "What is Machine Learning?"
-        )
-    )
+    answer = generate_response("Explain Generative AI in simple words.")
+    print(answer)

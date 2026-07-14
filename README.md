@@ -1,6 +1,6 @@
 # 📄 DocuMentor AI
 
-**DocuMentor AI** is an AI-powered application that combines **Retrieval-Augmented Generation (RAG)** with **Google Gemini** to provide intelligent document question answering, resume analysis, and ATS-style resume matching through an easy-to-use Streamlit interface.
+An AI-powered application that combines **Retrieval-Augmented Generation (RAG)**, **Groq Llama 3.3**, and **FAISS** to provide intelligent document question answering, resume analysis, and ATS-style resume matching through an interactive Streamlit interface.
 
 ---
 
@@ -9,27 +9,27 @@
 ### 🤖 AI Assistant
 
 * Ask general questions on any topic.
-* Powered by Google Gemini.
-* Provides clear and conversational responses.
+* Powered by **Groq Llama 3.3 70B Versatile**.
+* Provides fast and accurate responses.
 
-### 📘 Chat with Documents (RAG)
+### 📘 Chat with Document (RAG)
 
 * Upload PDF documents.
-* Extracts text from PDFs.
-* Splits documents into semantic chunks.
-* Generates embeddings using Sentence Transformers.
-* Performs semantic search using FAISS.
-* Answers questions using document context.
-* Falls back to Gemini's general knowledge if the answer is not found in the document.
+* Extract text from PDFs.
+* Split documents into semantic chunks.
+* Generate embeddings using Sentence Transformers.
+* Store vectors using FAISS.
+* Retrieve the most relevant document chunks.
+* Answer questions using document context.
+* Falls back to the LLM's general knowledge when information is unavailable in the uploaded document.
 
 ### 📄 Resume Analyzer
 
 Upload a resume and receive:
 
 * Professional Summary
-* Technical Skills
-* Experience Summary
-* Project Highlights
+* Skills Identification
+* Experience Overview
 * Strengths
 * Areas for Improvement
 * Suggested Job Roles
@@ -37,14 +37,13 @@ Upload a resume and receive:
 
 ### 🎯 ATS Resume Match
 
-Compare a resume against a Job Description to generate:
+Compare a resume with a Job Description to generate:
 
-* Estimated ATS Match Score
+* ATS Match Score
 * Matching Skills
 * Missing Skills
-* Resume Strengths
+* Resume Feedback
 * Improvement Suggestions
-* Hiring Recommendation
 
 ---
 
@@ -52,9 +51,9 @@ Compare a resume against a Job Description to generate:
 
 | Category              | Technologies                             |
 | --------------------- | ---------------------------------------- |
-| Programming Language  | Python                                   |
+| Language              | Python                                   |
 | Frontend              | Streamlit                                |
-| LLM                   | Google Gemini API                        |
+| LLM                   | Groq API (Llama 3.3 70B Versatile)       |
 | RAG                   | FAISS                                    |
 | Embeddings            | Sentence Transformers (all-MiniLM-L6-v2) |
 | PDF Processing        | PyPDF                                    |
@@ -83,11 +82,47 @@ DocuMentor_AI/
 │   └── ats_matcher.py
 │
 ├── data/
-│
 ├── requirements.txt
 ├── README.md
-├── .gitignore
-└── .env.example
+├── .env.example
+└── .gitignore
+```
+
+---
+
+# ⚙️ Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/paruchuru-divya/DocuMentor-AI.git
+cd DocuMentor-AI
+```
+
+### Create a Virtual Environment
+
+**Windows**
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configure Environment Variables
+
+Create a `.env` file in the project root.
+
+```text
+GROQ_API_KEY=your_groq_api_key
+```
+
+---
 
 # ▶️ Run the Application
 
@@ -95,30 +130,26 @@ DocuMentor_AI/
 streamlit run src/app.py
 ```
 
-The application will open automatically in your browser.
-
 ---
 
-# 💡 How It Works
+# 💡 Workflow
 
-## Document Chat
+### Document Chat
 
-1. Upload a PDF document.
-2. Extract text from the PDF.
-3. Split the text into smaller chunks.
-4. Generate vector embeddings using Sentence Transformers.
-5. Store embeddings in FAISS.
-6. Retrieve the most relevant chunks based on the user's question.
-7. Send the retrieved context and question to Google Gemini.
+1. Upload a PDF.
+2. Extract text from the document.
+3. Split the text into chunks.
+4. Generate embeddings using Sentence Transformers.
+5. Store vectors in FAISS.
+6. Retrieve the most relevant chunks.
+7. Send the retrieved context and user question to Groq Llama 3.3.
 8. Display the generated response.
 
----
-
-## Resume Analyzer
+### Resume Analyzer
 
 1. Upload a resume.
-2. Extract text.
-3. Send the resume content to Gemini using a structured prompt.
+2. Extract text from the PDF.
+3. Analyze the resume using Groq.
 4. Generate:
 
    * Summary
@@ -129,32 +160,30 @@ The application will open automatically in your browser.
    * Suggested Roles
    * Interview Questions
 
----
-
-## ATS Resume Match
+### ATS Resume Match
 
 1. Upload a resume.
 2. Paste a Job Description.
-3. Gemini compares both documents.
+3. Compare both documents using Groq.
 4. Generate:
 
    * ATS Match Score
    * Matching Skills
    * Missing Skills
    * Resume Feedback
-   * Hiring Recommendation
+   * Suggestions
 
 ---
 
+# 📸 Screenshots
 
-# 🔮 Future Enhancements
+Add screenshots of:
 
-* Multi-document support
-* Conversation history
-* Export resume analysis as PDF
-* Resume vs Multiple Job Descriptions
-* Cloud deployment
-* User authentication
+* Home Page
+* AI Assistant
+* Document Chat
+* Resume Analyzer
+* ATS Resume Match
 
 ---
 
@@ -169,7 +198,18 @@ The application will open automatically in your browser.
 * Streamlit Application Development
 * PDF Processing
 * Resume Analysis
-* ATS-style Resume Evaluation
+* ATS Resume Matching
+
+---
+
+# 🔮 Future Enhancements
+
+* Multi-document support
+* Conversation history
+* Export reports as PDF
+* Cloud deployment
+* User authentication
+* Support for additional LLM providers
 
 ---
 
@@ -177,4 +217,4 @@ The application will open automatically in your browser.
 
 **Divya Paruchuru**
 
-Aspiring AI/GenAI Engineer passionate about building practical AI applications using Large Language Models, Retrieval-Augmented Generation (RAG), Prompt Engineering, and Machine Learning.
+Aspiring AI/GenAI Engineer passionate about building intelligent applications using Large Language Models, Retrieval-Augmented Generation (RAG), Prompt Engineering, and Machine Learning.
