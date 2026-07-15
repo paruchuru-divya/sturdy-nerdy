@@ -1,6 +1,5 @@
-from retriever import retrieve
-from llm import generate_response
-
+from src.retriever import retrieve
+from src.llm import generate_response
 
 def ask(question):
 
@@ -9,7 +8,7 @@ def ask(question):
 
     1. Try to answer from uploaded document.
     2. If no useful document context is found,
-       use Gemini as a general AI assistant.
+       use Groq as a general AI assistant.
     """
 
     # Retrieve relevant document chunks
@@ -41,7 +40,7 @@ Answer:
 
 
     prompt = f"""
-You are EduExplain, an AI assistant.
+You are DocuMentor AI, an AI assistant.
 
 Use the document context when it is relevant.
 

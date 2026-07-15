@@ -1,4 +1,4 @@
-from llm import generate_response
+from src.llm import generate_response
 
 
 def ats_match(resume_text, job_description):

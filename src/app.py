@@ -1,8 +1,8 @@
 import os
 import streamlit as st
+import requests
 
 from indexer import index_pdf
-from pipeline import ask
 from resume_loader import extract_resume_text
 from resume_analyzer import analyze_resume
 from ats_matcher import ats_match
@@ -119,7 +119,14 @@ if mode == "🤖 AI Assistant":
 
             with st.spinner("Thinking..."):
 
-                answer, _ = ask(question)
+                    response = requests.post(
+                        "http://127.0.0.1:8000/chat",
+                        json={
+                            "question": question
+                        }
+                    )
+                    result = response.json()
+                    answer=result["answer"]
 
             st.markdown(answer)
 
@@ -163,9 +170,20 @@ elif mode == "📘 Chat with Document":
 
                 with st.spinner("Thinking..."):
 
-                    answer, _ = ask(question)
+                     response = requests.post(
+                        "http://127.0.0.1:8000/chat",
+                        json={
+                             "question": question
+                        }
+                     )
 
-                st.markdown(answer)
+                     result = response.json()
+
+                     answer = result["answer"]
+
+                     st.markdown(answer)                    
+
+                
 
             st.session_state.messages.append(
                 {

@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from pdf_loader import load_pdf
-from chunker import chunk_text
-from embeddings import generate_embeddings
-from faiss_manager import FAISSManager
+from src.pdf_loader import load_pdf
+from src.chunker import chunk_text
+from src.embeddings import generate_embeddings
+from src.faiss_manager import FAISSManager
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
